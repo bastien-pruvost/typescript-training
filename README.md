@@ -300,3 +300,110 @@ function logValue<Type extends { value: string }>(arg: Type | null): string | nu
   return arg?.value || null;
 }
 ```
+
+```tsx
+// --- Type vs Interface ---
+
+// Syntax
+type User = {
+  username: string,
+  age: number,
+  city: string
+};
+
+interface Point {
+  x: number,
+  y: number,
+  get(): number
+}
+
+// type can define any types
+// interface can define only object types
+
+// Interface can stay open (I can define another property type later)
+interface Point {
+	x: number
+}
+interface Point {
+	y: number
+}
+
+// Types can't stay open
+type Point { // ERROR : Duplicate identifier 'Point'
+	x: number
+}
+type Point { // ERROR : Duplicate identifier 'Point'
+	y: number
+}
+
+```
+
+```tsx
+// --- Type unknown ---
+
+// unknown is like any but when we want to define a type later.
+// It's less permissive
+
+function a(arg: unknown) {
+  arg.value = 'Hello'; // ERROR : Object is of type 'unknown'
+}
+
+function a(arg: unknown) {
+  if (arg instanceof HTMLInputElement) {
+    arg.value = 'Hello'; // OK : Type is unknown but we add a type condition
+  }
+}
+
+function a(arg: any) {
+  arg.value = 'Hello'; // OK : No verification by TS
+}
+
+// It's safer to use 'unknown' than 'any' when we want to add a type later !
+// 'any' disable type verification, 'unknown' allows verification without
+// knowing the type
+```
+
+```tsx
+// --- Lock object or array values ---
+
+const myObj = { isPrivate: true, isPublic: false } as const;
+// myObj cannot be modified later
+myObj.isPublic = true; // ERROR : Cannot assign to 'isPublic' because read-only
+
+const myArr = [1, 2, 3, 4] as const;
+// myArr cannot be modified later
+myArr.push(5); // ERROR : Property push does not exist on type read-only
+```
+
+```tsx
+// --- Tuple (Fixed array) ---
+const myTuple: [string, number] = ['tomato', 3];
+// It's locked and typed
+
+// Advanced typed tuple
+type Item = [string, number]; // We declare a type of Tuple
+
+const a: Item = ['tomate', 2]; // We declare two Tuples
+const b: Item = ['banane', 3];
+
+// This function merge two tuples in one and we specify that the output type is
+// an array of type 'two arrays that the same as inputs arrays'
+function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [...T, ...U] {
+  return [...a, ...b];
+}
+const c = merge(a, b);
+
+// Here we can destructure types and the output is typed from the two inputs
+```
+
+```tsx
+
+```
+
+```tsx
+
+```
+
+```tsx
+
+```

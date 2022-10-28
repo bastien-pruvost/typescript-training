@@ -131,15 +131,57 @@ interface Point {
 const john: User = { username: 'John', age: 24, city: 'Toulouse' };
 const myPoint: Point = { x: 12, y: 56 };
 
+// function a(arg: unknown) {
+//   if (arg instanceof HTMLInputElement) {
+//     arg.value = 'Hello';
+//   }
+// }
+
+const abcd = { hello: 'hello', bro: true } as const;
+const myArr = [1, 2, 3, 4] as const;
+
+const objExemple = { a: 12, b: 'Foo', c: false };
+
+// --- Tuple (Fixed array) ---
+const myTuple: [string, number] = ['tomato', 3];
+// It's locked and typed
+
+// Advanced typed tuple
+type Item = [string, number]; // We declare a type of Tuple
+
+const a: Item = ['tomate', 2]; // We declare two Tuples
+const b: Item = ['banane', 3];
+const c = { test: 1, testing: true };
+// This function merge two tuples in one and we specify that the output type is
+// an array of type 'two arrays that the same as inputs arrays'
+function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [...T, ...U] {
+  return [...a, ...b];
+}
+const e = merge(a, b);
+
+const array: [boolean, boolean, null] = [true, false, null];
+
+if (array[1]) {
+  console.log(array[0].toString());
+}
+
+// --------------- Just for unused vars ----------------------
 printId(3);
-printSomething('Test', 3);
-mapArray('test');
+printSomething('Foo', 3);
+mapArray('Bar');
 exemple({ firstname: 'John' });
 isAnArray(['Foo', 'Bar']);
+const abc = myNewFunc((3).toString());
 console.log(myButton);
 console.log(john);
 console.log(d);
 console.log(firstValue);
-const abc = myNewFunc((3).toString());
 console.log(abc);
 console.log(myPoint);
+console.log(abcd);
+console.log(myArr);
+console.log(myArr);
+console.log(e);
+console.log(c);
+console.log(myTuple);
+console.log(objExemple);
