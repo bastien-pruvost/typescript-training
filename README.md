@@ -1,5 +1,7 @@
 # TypeScript Training
 
+## This is a summary of what I learn in TS (A kind of cheatsheet)
+
 ```tsx
 // --- Basics Types ---
 const myStr: string = 'Hello world !';
