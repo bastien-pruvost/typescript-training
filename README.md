@@ -20,17 +20,17 @@ const myNull: null = null;
 const myArr: string[] = ['John', 'Doe', 'Foo', 'Bar'];
 
 // Array of strings : alt method
-const myArr: Array<string> = ['Hey', 'Bro']
+const myArr: Array<string> = ['Hey', 'Bro'];
 
 // Array of any types
 const arr: any[] = ['Hello', 4, false];
 
 // Array of typed objects
-const arrOfObj Array<{id: number, age: number}> = [
-	{id: 12, age: 31},
-	{id: 13, age: 24},
-	{id: 14, age: 49}
-]
+const arrOfObj: Array<{ id: number; age: number }> = [
+  { id: 12, age: 31 },
+  { id: 13, age: 24 },
+  { id: 14, age: 49 }
+];
 ```
 
 ```tsx
@@ -184,7 +184,7 @@ function exemple(a: MouseEvent | HTMLInputElement | Object) {
   }
 }
 
-// Function with param of type any. It return that b is an Array of any (bool)
+// Function with param of type any. It return true if b is an Array of any (bool)
 const isAnArray: Function = (b: any): b is any[] => {
   return Array.isArray(b);
 };
@@ -205,7 +205,7 @@ myDiv!.textContent = 'Hello world'; // '!'
 
 // We tell TS that we are sure of the type and he dont check (with 'as')
 const myDiv = document.querySelector('#my-div') as HTMLDivElement | null;
-if (otherDiv) {
+if (myDiv) {
   myDiv.textContent = 'Hello world'; // TS know that myInput is DivElement
 }
 
@@ -221,13 +221,14 @@ if (myInput) {
 }
 
 // ------------------
+
 const myInput = <HTMLInputElement | null>document.querySelector('#my-input');
 // === is same result as
 const myInput = document.querySelector<HTMLInputElement>('#my-input');
 ```
 
 ```tsx
-// --- Alias (custom type) ---
+// --- Alias (Type) ---
 
 // Create an alias
 type User = { firstname: string; lastname: string; age: number };
@@ -237,10 +238,10 @@ const john: User = { firstname: 'John', lastname: 'Doe', age: 24 };
 type DateString = string;
 // It can be usefull to understand elsewhere that it is a string with a date
 
-// I can tell TS the type is a key of another type
+// We can tell TS the that type is a key of another type
 type UserKey = keyof User;
 
-// I can tell TS the type depend on another type
+// We can tell TS that the type depend on another type
 type Username = User['firstname'];
 // Type Username is a string because firstname is type string
 ```
@@ -268,6 +269,7 @@ function returnFirstValue<Type>(arr: Type[]): Type {
 }
 
 // ------------------
+
 const myInput = <HTMLInputElement | null>document.querySelector('#my-input');
 // === is same result as
 const myInput = document.querySelector<HTMLInputElement>('#my-input');
@@ -278,6 +280,7 @@ const myInput = document.querySelector<HTMLInputElement>('#my-input');
 // --- Alias with generics --- 😵‍💫
 
 type Identity<ArgType> = (arg: ArgType) => ArgType;
+
 const myNewFunc: Identity<number> = (b) => {
   return b;
 };
@@ -295,9 +298,9 @@ function logSize<Type extends { length: number }>(arg: Type): Type {
 
 // We tell TS that the type need to have a key value of type string
 // and can return string or null
-function logValue<Type extends { value: string }>(arg: Type | null): string | null {
-  console.log(arg?.value);
-  return arg?.value || null;
+function logValue<Type extends { value: string }>(arg: Type): string {
+  console.log(arg.value);
+  return arg.value;
 }
 ```
 
@@ -317,8 +320,8 @@ interface Point {
   get(): number
 }
 
-// type can define any types
-// interface can define only object types
+// type define any types
+// interface define like a class or object
 
 // Interface can stay open (I can define another property type later)
 interface Point {
@@ -335,7 +338,6 @@ type Point { // ERROR : Duplicate identifier 'Point'
 type Point { // ERROR : Duplicate identifier 'Point'
 	y: number
 }
-
 ```
 
 ```tsx
@@ -355,7 +357,7 @@ function a(arg: unknown) {
 }
 
 function a(arg: any) {
-  arg.value = 'Hello'; // OK : No verification by TS
+  arg.value = 'Hello'; // OK : No verification by TS (but not good practice !)
 }
 
 // It's safer to use 'unknown' than 'any' when we want to add a type later !
@@ -376,18 +378,18 @@ myArr.push(5); // ERROR : Property push does not exist on type read-only
 ```
 
 ```tsx
-// --- Tuple (Fixed array) ---
+// --- Tuple (Array with fixed types and length) ---
 const myTuple: [string, number] = ['tomato', 3];
-// It's locked and typed
+// Length and types are fixed !
 
 // Advanced typed tuple
 type Item = [string, number]; // We declare a type of Tuple
 
-const a: Item = ['tomate', 2]; // We declare two Tuples
-const b: Item = ['banane', 3];
+const a: Item = ['tomate', 2];
+const b: Item = ['banane', 3]; // We declare two Tuples
 
-// This function merge two tuples in one and we specify that the output type is
-// an array of type 'two arrays that the same as inputs arrays'
+// This function merge two array in one and we specify that the output type is
+// an array of type 'two arrays that has same types as inputs arrays'
 function merge<T extends unknown[], U extends unknown[]>(a: T, b: U): [...T, ...U] {
   return [...a, ...b];
 }
@@ -397,13 +399,174 @@ const c = merge(a, b);
 ```
 
 ```tsx
+// --- Enum ---
+// Can be usefull for states or status
 
+enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+
+let step: STEPS = STEPS.Intro;
+
+if (step === STEPS.Intro) {
+  console.log("It's the introduciton");
+}
+
+// enum are not usable values but just a state for comparison/checks/conditions
+
+// By de default the values are 1, 2, 3, 4, etc..
+
+console.log(step); // 1
+// or
+console.log(STEPS[step]); // Intro
+
+// But we can assign other values for debugging
+enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+// Now it's better for debugging :
+console.log(step); // 'Intro'
+
+// ---------------------
+// We can declare enum with const
+const enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+const step = STEPS.Intro;
+
+// If we do that TS replace step by the value at the build
+// (not big difference for dev)
 ```
 
 ```tsx
+// --- Enum ---
+// Can be usefull for states or status
 
+enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+
+let step: STEPS = STEPS.Intro;
+
+if (step === STEPS.Intro) {
+  console.log("It's the introduciton");
+}
+
+// enum are not usable values but just a state for comparison/checks/conditions
+
+// By de default the values are 1, 2, 3, 4, etc..
+
+console.log(step); // 1
+// or
+console.log(STEPS[step]); // Intro
+
+// But we can assign other values for debugging
+enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+// Now it's better for debugging :
+console.log(step); // 'Intro'
+
+// ---------------------
+// We can declare enum with const
+const enum STEPS {
+  Intro = 'Intro',
+  Choice = 'Choice',
+  Cart = 'Cart',
+  Payment = 'Payment'
+}
+const step = STEPS.Intro;
+
+// If we do that TS replace step by the value at the build
+// (not big difference for dev)
 ```
 
 ```tsx
+// -- Readonly --
 
+// Readonly prevent modifying an element
+// It's usefull if we pass an arg which should not change
+
+const reverse = <T,>(arr: readonly T[]): T[] => {
+  return arr.reverse();
+  // ERROR : I can't reverse or push because arg is readonly
+
+  return [...arr].reverse();
+  // OK : Because I create a new array and dont edit the readonly array
+};
+```
+
+```tsx
+// --- Classes ---
+
+// Private
+class A {
+  private num = 3; // num is only accessible in the class , not outside
+
+  logNum = () => {
+    console.log(this.num);
+  };
+}
+
+const instance = new A();
+
+console.log(instance.num); // Error : 'num' is private
+
+instance.logNum(); // It's ok because i call a function inside the class
+
+//Protected
+class A {
+  protected num = 3;
+  // num is only accessible in the class and in child class (extended from A)
+}
+
+class B extends A {
+  logNumA = () => {
+    console.log(this.num); // It's OK because B extends A
+    // If i use private instead of protected i have an error
+  };
+}
+
+// Public & constructor
+class A {
+  constructor(public a: string) {
+    // We dont need to declare this.a = a
+    // Because a is 'public' in constructor types
+    // 'public' is like a shortcut in constructors
+  }
+}
+const instance = new A(3, 'test');
+console.log(instance.a); // 3
+
+// Types work normally in classes :
+class Collection<T> {
+  constructor(private items: T[]) {}
+
+  first(): T | null {
+    return this.items[0] || null;
+  }
+}
+
+const instance = new Collection([1, 2, 3]);
+// TS know that instance is a 'Collection<number>'
+
+const theFirst = instance.first();
+// TS know that theFirst is of type 'number | null'
+
+// 12:05
 ```
