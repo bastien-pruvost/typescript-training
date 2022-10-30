@@ -567,6 +567,40 @@ const instance = new Collection([1, 2, 3]);
 
 const theFirst = instance.first();
 // TS know that theFirst is of type 'number | null'
+```
 
-// 12:05
+```tsx
+// --- Decalaration files ---
+
+// Create a 'myLib.d.ts' in 'src/types'
+
+declare var myMethod: (eventName: string, options: {
+  hitType: string,
+  eventCategory?: string
+}) => void
+
+// In tsconfig.json :
+"include": [
+	"src/types/**/*"
+]
+
+// To add types in a lib or package that dont support TS :
+// Exemple with 'scroll-to' package
+declare module "scroll-to" {
+	const scrollTo: (x: number, y: number, options: {
+		ease?: string,
+		duration?: number
+	}) => void
+
+	export {scrollTo}
+	// or
+	export default scrollTo
+}
+
+// In my TS file :
+import {scrollTo} from 'scroll-to';
+// or
+import scrollTo from 'scroll-to';
+
+// Restart vscode
 ```
