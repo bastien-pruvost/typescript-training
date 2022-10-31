@@ -4,17 +4,18 @@
     "module": "ESNext",
     "lib": ["ES2017", "DOM"],
     "moduleResolution": "Node",
-    "strict": true,
     "useDefineForClassFields": true,
     "resolveJsonModule": true,
+    "noEmit": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
