@@ -1,4 +1,4 @@
-import { Equal, Expect } from "./helpers/type-utils";
+import { Equal, Expect } from './helpers/type-utils';
 
 interface User {
   id: string;
@@ -11,6 +11,6 @@ interface User {
  * firstName and lastName properties of User?
  */
 
-type MyType = unknown;
+type MyType = Omit<User, 'id'>;
 
 type tests = [Expect<Equal<MyType, { firstName: string; lastName: string }>>];

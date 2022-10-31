@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { expect, it } from 'vitest';
 
 interface User {
   id: string;
@@ -7,8 +7,8 @@ interface User {
 }
 
 const createThenGetUser = async (
-  createUser: unknown,
-  getUser: unknown,
+  createUser: () => Promise<string>,
+  getUser: (id: string) => Promise<User>
 ): Promise<User> => {
   const userId: string = await createUser();
 
@@ -17,19 +17,19 @@ const createThenGetUser = async (
   return user;
 };
 
-it("Should create the user, then get them", async () => {
+it('Should create the user, then get them', async () => {
   const user = await createThenGetUser(
-    async () => "123",
+    async () => '123',
     async (id) => ({
       id,
-      firstName: "Matt",
-      lastName: "Pocock",
-    }),
+      firstName: 'Matt',
+      lastName: 'Pocock'
+    })
   );
 
   expect(user).toEqual({
-    id: "123",
-    firstName: "Matt",
-    lastName: "Pocock",
+    id: '123',
+    firstName: 'Matt',
+    lastName: 'Pocock'
   });
 });

@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { expect, it } from 'vitest';
 
 export const getName = (params: { first: string; last?: string }) => {
   if (params.last) {
@@ -7,19 +7,19 @@ export const getName = (params: { first: string; last?: string }) => {
   return params.first;
 };
 
-it("Should work with just the first name", () => {
+it('Should work with just the first name', () => {
   const name = getName({
-    first: "Matt",
+    first: 'Matt'
   });
 
-  expect(name).toEqual("Matt");
+  expect(name).toEqual('Matt');
 });
 
-it("Should work with the first and last name", () => {
+it('Should work with the first and last name', () => {
   const name = getName({
-    first: "Matt",
-    last: "Pocock",
+    first: 'Matt',
+    last: 'Pocock'
   });
 
-  expect(name).toEqual("Matt Pocock");
+  expect(name).toEqual('Matt Pocock');
 });

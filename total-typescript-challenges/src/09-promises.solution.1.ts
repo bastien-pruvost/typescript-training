@@ -10,7 +10,7 @@ interface LukeSkywalker {
 }
 
 export const fetchLukeSkywalker = async (): Promise<LukeSkywalker> => {
-  const data = await fetch("https://swapi.dev/api/people/1").then((res) => {
+  const data = await fetch('https://swapi.dev/api/people/1').then((res) => {
     return res.json();
   });
 
