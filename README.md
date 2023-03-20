@@ -1,6 +1,26 @@
+<!-- prettier-ignore-start -->
+
+<!-- Rename all occurences with Cmd + D :
+
+Project Name
+repository-name
+www.projectlink.com
+https://www.projectlink.com
+https://www.documentationlink.com
+
+ -->
+
 # TypeScript Training
 
-## This is a summary of what I learn in TS (A kind of cheatsheet)
+This is a summary of what I learn in TS (A kind of cheatsheet)
+
+
+## Tech Stack
+
+- Typescript
+
+
+## Notes
 
 ```tsx
 // --- Basics Types ---
@@ -604,3 +624,14 @@ import scrollTo from 'scroll-to';
 
 // Restart vscode
 ```
+
+
+## License
+
+Distributed under the [MIT License](https://choosealicense.com/licenses/mit/).
+
+See `LICENSE` file for more information.
+
+
+
+<!-- prettier-ignore-end -->
